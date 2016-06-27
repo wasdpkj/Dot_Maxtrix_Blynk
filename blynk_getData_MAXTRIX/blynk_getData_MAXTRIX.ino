@@ -124,6 +124,23 @@ BLYNK_WRITE(V4) { //Sync DateColor
   terminal.flush();
 }
 
+BLYNK_WRITE(V5) {
+  unsigned long _time = param.asLong();
+
+  if (_time >= 1453998871) {
+    setTime(_time);             // Sync Time library clock to the value received from Blynk
+    SetRtc();
+    Serial.print("Time is Sync:");
+    terminal.println("Time is Sync");
+  }
+}
+
+// This is called by Time library when it needs time sync
+time_t requestTimeSync() {
+  Blynk.syncVirtual(V5); // Request RTC widget (V5) update from the server
+  return 0;              // Tell the Time library that we'll set it later
+}
+
 void UnReadMessages() {
   colorClear(2);
   display.setColor(255, 0, 0);
@@ -227,6 +244,8 @@ void setup() {
     display.print("conER."); //string, MODE, time ,y
     wdt_enable(WDTO_1S); //reset mcu
   }
+  // Set function to call when time sync required
+  setSyncProvider(requestTimeSync);
   Serial.println("con OK");
   display.clearDisplay();
   display.setColor(0, 255, 0);
