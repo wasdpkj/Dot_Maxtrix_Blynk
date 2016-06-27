@@ -38,7 +38,7 @@
 //----------------------------------------
 #define WIFI_SSID "we are  Viruses"
 #define WIFI_PASSWORD "nie19830108"
-char auth[] = "2d6635f12d0143339b5304bafb62c3cf";// You should get Auth Token in the Blynk App.
+char auth[] = "xxx";// You should get Auth Token in the Blynk App.
 
 boolean staMessage = false, staProximity = false;
 int modeNum = 0;
